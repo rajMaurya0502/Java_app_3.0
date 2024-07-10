@@ -21,7 +21,7 @@ pipeline{
             }
         }
          
-        stage('Static code analysis: Sonarqube'){
+        stage('Static code analysis'){
             steps{
                    
                    withSonarQubeEnv('SonarQube'){
