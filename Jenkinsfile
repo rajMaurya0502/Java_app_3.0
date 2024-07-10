@@ -1,56 +1,34 @@
-@Library('my-shared-library') _
 
 pipeline{
 
     agent any
-    //agent { label 'Demo' }
 
-    parameters{
-
-        choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
-        string(name: 'ImageName', description: "name of the docker build", defaultValue: 'javapp')
-        string(name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1')
-        string(name: 'DockerHubUser', description: "name of the Application", defaultValue: 'praveensingam1994')
+    environment{
+        SONARQUBE_URL = 'http://13.127.141.151:9000'
+            
     }
+   
 
     stages{
          
         stage('Git Checkout'){
-                    when { expression {  params.action == 'create' } }
+                   
             steps{
             gitCheckout(
-                branch: "main",
-                url: "https://github.com/praveen1994dec/Java_app_3.0.git"
+                branch: "dev",
+                url: "https://github.com/rajMaurya0502/Java_app_3.0.git"
             )
             }
         }
-         stage('Unit Test maven'){
          
-         when { expression {  params.action == 'create' } }
-
-            steps{
-               script{
-                   
-                   mvnTest()
-               }
-            }
-        }
-         stage('Integration Test maven'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
-                   
-                   mvnIntegrationTest()
-               }
-            }
-        }
         stage('Static code analysis: Sonarqube'){
-         when { expression {  params.action == 'create' } }
             steps{
                script{
                    
-                   def SonarQubecredentialsId = 'sonarqube-api'
-                   statiCodeAnalysis(SonarQubecredentialsId)
+                   withSonarQubeEnv('SonarQube'){
+                       sh "mvn -ntp sonar:sona -Dsonar.projectKey=java_app -Dsonar.sources=src -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.login=sqa_0908e617ed2e9f32f7269acafe3e997e41456f16"
+
+                       
                }
             }
        }
