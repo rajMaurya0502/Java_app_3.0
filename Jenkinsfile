@@ -14,10 +14,11 @@ pipeline{
         stage('Git Checkout'){
                    
             steps{
-            gitCheckout(
-                branch: "dev",
-                url: "https://github.com/rajMaurya0502/Java_app_3.0.git"
-            )
+            // gitCheckout(
+            //     branch: "dev",
+            //     url: "https://github.com/rajMaurya0502/Java_app_3.0.git"
+            // )
+                git url: "https://github.com/rajMaurya0502/Java_app_3.0.git", branch: 'dev'
             }
         }
          
