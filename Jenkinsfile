@@ -10,6 +10,7 @@ pipeline{
    
 
     stages{
+
          
         stage('Git Checkout'){
                    
@@ -21,6 +22,13 @@ pipeline{
                 git url: "https://github.com/rajMaurya0502/Java_app_3.0.git", branch: 'dev'
             }
         }
+        stage('build'){
+
+            steps{
+                sh 'mvn clean install'
+            }
+        }
+        
          
         stage('Static code analysis'){
             steps{
