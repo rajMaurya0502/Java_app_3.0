@@ -26,7 +26,7 @@ pipeline{
             steps{
                    
                    withSonarQubeEnv('SonarQube'){
-                       sh "mvn -ntp sonar:sona -Dsonar.projectKey=java_app -Dsonar.sources=src -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.login=sqa_0908e617ed2e9f32f7269acafe3e997e41456f16"
+                       sh "mvn -ntp sonar:sonar -Dsonar.projectKey=java_app -Dsonar.sources=src -Dsonar.host.url=${SONARQUBE_URL} -Dsonar.login=sqa_0908e617ed2e9f32f7269acafe3e997e41456f16"
                }
             }
        }
